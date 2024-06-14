@@ -1,25 +1,13 @@
 <template>
-  <div>
-    <h1 class="heading">Hello Nuxt!</h1>
-
-    <BaseButton @click="onClick">{{ $t("about_company") }}</BaseButton>
-
-    <pre>{{ clearSpaces("+998 99 999 99 99") }}</pre>
+  <div class="flex flex-col items-center">
+    <h1 class="text-[30px] font-bold underline">Users List</h1>
+    <User v-for="user of users" :user="user" />
   </div>
 </template>
 
-<script setup>
-if (process.client) {
-  const heading = document.querySelector(".heading");
-}
+<script setup lang="ts">
+const usersStore = useUsersStore();
 
-const commonStore = useCommonStore();
-
-const counter = computed(() => commonStore.counter);
-
-const { showToast } = useCustomToast();
-
-const onClick = () => {
-  showToast("Success!", "error");
-};
+await usersStore.getUsers();
+const users = computed(() => usersStore.users);
 </script>
